@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -40,12 +41,12 @@ public class MainPage extends MainPageLogic {
         return this;
     }
 
-    public Class<ListingOfHotel> selectDate() {
+    public ListingOfHotel selectDate() {
         dateField.click();
         wait.until(ExpectedConditions.attributeContains(calendarDropMenu, "style", "display: block;"));
         firstDate.click();
         lastDate.click();
         btnSearch.click();
-        return ListingOfHotel.class;
+        return PageFactory.initElements(driver, ListingOfHotel.class);
     }
 }
