@@ -9,10 +9,9 @@ public class FiltersByTags extends BaseTest {
     @Test
     public void checkOfFiltersTagsSorting() {
 
-        MainPage  mainPage = PageFactory.initElements(WebDriverProvider.getWebDriver(), abTest.MainPage.class);
-      //  openUrl();
-     //   MainPage mainPage = new MainPage();
-        mainPage.selectСity().selectDate();
+        MainPage mainPage = PageFactory.initElements(WebDriverProvider.getWebDriver(), abTest.MainPage.class);
+        ListingOfHotel listingPage = mainPage.selectСity().selectDate();
+        listingPage.selectPriceSorting();
         System.out.println();
 
     }
