@@ -1,5 +1,6 @@
 package abTest;
 
+import io.qameta.allure.Description;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,12 +36,12 @@ public class MainPage extends MainPageLogic {
         driver.get("https://www.booking.com/");
     }
 
-
+  @Description("Select city for order of Hotel")
     public MainPage selectСity() {
         wait.until(ExpectedConditions.visibilityOf(cityField)).sendKeys("Rome");
         return this;
     }
-
+    @Description("Select hotel for order")
     public ListingOfHotel selectDate() {
         dateField.click();
         wait.until(ExpectedConditions.attributeContains(calendarDropMenu, "style", "display: block;"));
