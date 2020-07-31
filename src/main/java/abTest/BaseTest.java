@@ -10,10 +10,8 @@ public class BaseTest {
 
     @BeforeMethod
     public void openUrl() {
-
         WebDriverProvider.getWebDriver().manage().window().maximize();
         WebDriverProvider.getWebDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-       // WebDriverProvider.getWebDriver().get("https://rozetka.com.ua/");
     }
 
     @AfterSuite
