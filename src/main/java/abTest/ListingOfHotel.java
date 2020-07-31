@@ -3,7 +3,6 @@ package abTest;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -35,8 +34,8 @@ public class ListingOfHotel {
         firstCurrentHotel = titleOfHotels.get(0).getText();
         filterLinks.get(2).click();
        // wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[contains(@class,'sr-hotel__name')]"), firstCurrentHotel));
-        wait.until(ExpectedConditions.visibilityOf(loader));
-        wait.until(ExpectedConditions.invisibilityOf(loader));
+     //   wait.until(ExpectedConditions.visibilityOf(loader));
+      //  wait.until(ExpectedConditions.invisibilityOf(loader));
         return this;
     }
 
