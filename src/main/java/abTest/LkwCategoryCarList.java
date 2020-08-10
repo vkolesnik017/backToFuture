@@ -5,10 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import specialFiles.Product;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class LkwCategoryCarList {
@@ -44,16 +46,39 @@ public class LkwCategoryCarList {
 
         List<String> expectedGeneric = Arrays.asList("Ölfilter", "Dichtung, Ölfilter");
 
+
+  /*      while (forwardOfListing.isDisplayed()) {
+
+
+        }*/
         addProductToList(activeProductList, productsList);
 
-        while (forwardOfListing.isDisplayed()) {
             forwardOfListing.click();
             addProductToList(activeProductList, productsList);
-        }
+
 
         for (int i = 0; i < activeProductList.size(); i++) {
             System.out.println(activeProductList.get(i).getAttributeOfButton() + " - " + activeProductList.get(i).getGenericOfProduct() + " - " + activeProductList.get(i).getPriceOfProduct());
         }
+
+        List<Product> listBeforeSorting = new ArrayList<>(activeProductList);
+
+        Comparator<String> genericsComparator = (g1, g2) -> {
+            if (!expectedGeneric.contains(g1)) {
+                return 1;
+            }
+            if (!expectedGeneric.contains(g2)) {
+                return -1;
+            }
+            return expectedGeneric.indexOf(g1) - expectedGeneric.indexOf(g2);
+        };
+        Comparator<Product> productsComparator = Comparator
+                .comparing((Product p) -> "button ".equals(p.getAttributeOfButton()) ? -1 : 0)
+                .thenComparing(Product::getGenericOfProduct, genericsComparator)
+                .thenComparingDouble(Product::getPriceOfProduct);
+        activeProductList.sort(productsComparator);
+        Assert.assertEquals(listBeforeSorting,activeProductList);
+
 
         return this;
     }
