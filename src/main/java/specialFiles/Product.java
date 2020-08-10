@@ -4,6 +4,11 @@ public class Product {
 
     private String genericOfProduct;
     private double priceOfProduct;
+    private String attributeOfButton;
+
+    public void setAttributeOfButton(String attribute){attributeOfButton=attribute;}
+
+    public String getAttributeOfButton() {return attributeOfButton;}
 
     public void setGenericOfProduct(String generic) {
         genericOfProduct = generic;
