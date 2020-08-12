@@ -26,7 +26,7 @@ public class SortingOfList {
        users.sort(userComparator);
 
       //  users.sort(((o1, o2) -> o1.getName().compareTo(o2.getName())));
-
+        System.out.println("---------------------");
         System.out.println("\nAfter sort:");
         for (User user : users) {
             System.out.println(user);
