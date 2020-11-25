@@ -35,8 +35,7 @@ public class AddComputerPage {
 
 
     @Description("set value for 'Computer name' field")
-    public AddComputerPage setComputerName(String computerName) throws InterruptedException {
-        Thread.sleep(2000);
+    public AddComputerPage setComputerName(String computerName) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 10);
         wait.until(ExpectedConditions.visibilityOf(computerNameField)).sendKeys(computerName);
         wait.until(ExpectedConditions.textToBePresentInElementValue(computerNameField, computerName));
