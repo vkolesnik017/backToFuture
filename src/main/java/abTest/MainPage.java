@@ -9,45 +9,69 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MainPage extends MainPageLogic {
+public class MainPage {
     private WebDriver driver = WebDriverProvider.getWebDriver();
-    WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
-    @FindBy(how = How.NAME, name = "ss")
-    WebElement cityField;
 
-    @FindBy(how = How.XPATH, xpath = "//div[@class='xp__dates-inner']")
-    WebElement dateField;
+    @FindBy(how = How.XPATH, xpath = "//table[@class='computers zebra-striped']")
+    WebElement databaseTable;
 
-    @FindBy(how = How.XPATH, xpath = "//div[@class='bui-calendar']")
-    WebElement calendarDropMenu;
+    @FindBy(how = How.ID, id = "add")
+    WebElement btnAddNewComputer;
 
-    @FindBy(how = How.XPATH, xpath = "//div[@class='bui-calendar__wrapper'][1]/table//span[contains(text(),'29')]")
-    WebElement firstDate;
+    @FindBy(how = How.ID, id = "searchbox")
+    WebElement searchField;
 
-    @FindBy(how = How.XPATH, xpath = "//div[@class='bui-calendar__wrapper'][2]/table//span[contains(text(),'18')]")
-    WebElement lastDate;
-
-    @FindBy(how = How.XPATH, xpath = "//button[@class='sb-searchbox__button ']")
+    @FindBy(how = How.ID, id = "searchsubmit")
     WebElement btnSearch;
+
+    @FindBy(how = How.XPATH, xpath = "//div[@class='well']")
+    WebElement noResult;
+
+    @FindBy(how = How.XPATH, xpath = "//table[@class='computers zebra-striped']//tr/td[1]/a")
+    WebElement foundComputer;
+
+    @FindBy(how = How.XPATH, xpath = "//div[@class='alert-message warning']")
+    WebElement successfulMessage;
 
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
-        driver.get("https://www.booking.com/");
+        driver.get("http://computer-database.gatling.io/computers");
     }
 
-  @Description("Select city for order of Hotel")
-    public MainPage selectСity() {
-        wait.until(ExpectedConditions.visibilityOf(cityField)).sendKeys("Rome");
+    @Description("Presence of Database table")
+    public MainPage presenceOfDataBaseTable() {
+        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
+        wait.until(ExpectedConditions.visibilityOf(databaseTable));
         return this;
     }
-    @Description("Select hotel for order")
-    public ListingOfHotel selectDate() {
-        dateField.click();
-        wait.until(ExpectedConditions.attributeContains(calendarDropMenu, "style", "display: block;"));
-        firstDate.click();
-        lastDate.click();
+
+    @Description("click on Add a New Computer button")
+    public AddComputerPage clickOnAddNewComputer() {
+        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
+        wait.until(ExpectedConditions.visibilityOf(btnAddNewComputer)).click();
+        return PageFactory.initElements(driver, AddComputerPage.class);
+    }
+
+    @Description("presence of added computer message")
+    public MainPage presenceOfAddedComputerMessage() {
+        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
+        wait.until(ExpectedConditions.visibilityOf(successfulMessage));
+        return this;
+    }
+
+    @Description("get result of search")
+    public String getResultOfSearch(String titleOfComputer) {
+        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
+        wait.until(ExpectedConditions.visibilityOf(searchField)).sendKeys(titleOfComputer);
         btnSearch.click();
-        return PageFactory.initElements(driver, ListingOfHotel.class);
+        String resultOfSearch;
+        if (noResult.isDisplayed()) {
+            resultOfSearch = " ";
+        } else {
+            wait.until(ExpectedConditions.visibilityOf(foundComputer));
+            resultOfSearch=foundComputer.getText();
+        }
+        return resultOfSearch;
     }
 }
