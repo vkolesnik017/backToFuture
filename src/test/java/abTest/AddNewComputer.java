@@ -19,8 +19,6 @@ public class AddNewComputer extends BaseTest {
                 .clickOnBtnCreateComputer().presenceOfDataBaseTable();
         String resultOfSearch = mainPage.getResultOfSearch(titleOfCOmputer);
         Assert.assertEquals(resultOfSearch, titleOfCOmputer);
-        System.out.println();
-
     }
 
 }
