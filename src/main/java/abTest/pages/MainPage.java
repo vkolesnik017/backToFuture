@@ -1,5 +1,6 @@
-package abTest;
+package abTest.pages;
 
+import abTest.WebDriverProvider;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,48 +31,35 @@ public class MainPage {
     @FindBy(how = How.XPATH, xpath = "//table[@class='computers zebra-striped']//tr/td[1]/a")
     WebElement foundComputer;
 
-    @FindBy(how = How.XPATH, xpath = "//div[@class='alert-message warning']")
-    WebElement successfulMessage;
-
-
     public MainPage(WebDriver driver) {
         this.driver = driver;
-        driver.get("http://computer-database.gatling.io/computers");
     }
 
-    @Description("Presence of Database table")
-    public MainPage presenceOfDataBaseTable() {
+    @Description("open page")
+    public MainPage open(String url) {
+        driver.get(url);
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         wait.until(ExpectedConditions.visibilityOf(databaseTable));
         return this;
     }
 
     @Description("click on Add a New Computer button")
-    public AddComputerPage clickOnAddNewComputer() {
+    public AddComputerPage addNewComputer() {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         wait.until(ExpectedConditions.visibilityOf(btnAddNewComputer)).click();
         return PageFactory.initElements(driver, AddComputerPage.class);
     }
 
-    @Description("presence of added computer message")
-    public MainPage presenceOfAddedComputerMessage() {
-        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
-        wait.until(ExpectedConditions.visibilityOf(successfulMessage));
-        return this;
-    }
-
     @Description("get result of search")
-    public String getResultOfSearch(String titleOfComputer) {
+    public String searchForComputer(String titleOfComputer) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         wait.until(ExpectedConditions.visibilityOf(searchField)).sendKeys(titleOfComputer);
         btnSearch.click();
-        String resultOfSearch;
-        if (noResult.isDisplayed()) {
-            resultOfSearch = " ";
-        } else {
+        String searchResult = "";
+        if (!noResult.isDisplayed()) {
             wait.until(ExpectedConditions.visibilityOf(foundComputer));
-            resultOfSearch=foundComputer.getText();
+            searchResult = foundComputer.getText();
         }
-        return resultOfSearch;
+        return searchResult;
     }
 }

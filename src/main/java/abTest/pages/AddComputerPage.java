@@ -1,5 +1,6 @@
-package abTest;
+package abTest.pages;
 
+import abTest.WebDriverProvider;
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AddComputerPage {
     private WebDriver driver = WebDriverProvider.getWebDriver();
@@ -30,9 +32,6 @@ public class AddComputerPage {
     @FindBy(how = How.XPATH, xpath = "//input[@class='btn primary']")
     WebElement btnCreateComputer;
 
-    @FindBy(how = How.ID, id = "main")
-    WebElement mainForm;
-
 
     @Description("set value for 'Computer name' field")
     public AddComputerPage setComputerName(String computerName) {
@@ -43,36 +42,25 @@ public class AddComputerPage {
     }
 
     @Description("set value for 'Introduced date' field")
-    public AddComputerPage setIntroducedDate(String date) {
+    public AddComputerPage setIntroducedDate(LocalDate date) {
+        String dateString = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
-        wait.until(ExpectedConditions.visibilityOf(introducedDateField)).sendKeys(date);
-        wait.until(ExpectedConditions.textToBePresentInElementValue(introducedDateField, date));
+        wait.until(ExpectedConditions.visibilityOf(introducedDateField)).sendKeys(dateString);
+        wait.until(ExpectedConditions.textToBePresentInElementValue(introducedDateField, dateString));
         return this;
     }
 
     @Description("set value for 'Introduced date' field")
-    public AddComputerPage setDiscontinuedDate(String date) {
+    public AddComputerPage setDiscontinuedDate(LocalDate date) {
+        String dateString = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
-        wait.until(ExpectedConditions.visibilityOf(introducedDiscontinuedField)).sendKeys(date);
-        wait.until(ExpectedConditions.textToBePresentInElementValue(introducedDiscontinuedField, date));
+        wait.until(ExpectedConditions.visibilityOf(introducedDiscontinuedField)).sendKeys(dateString);
+        wait.until(ExpectedConditions.textToBePresentInElementValue(introducedDiscontinuedField, dateString));
         return this;
     }
 
-    @Description("get current date")
-    public String getCurrentDate() {
-        LocalDate date = LocalDate.now();
-        return String.valueOf(date);
-    }
-
-    @Description("get current date")
-    public String getOldDate(int years) {
-        LocalDate date = LocalDate.now();
-        String oldDate = String.valueOf(date.minusYears(years));
-        return oldDate;
-    }
-
     @Description("select value for Company field ")
-    public AddComputerPage selectCompany(String idOfCompany) throws InterruptedException {
+    public AddComputerPage selectCompany(String idOfCompany) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         companyField.selectByVisibleText(idOfCompany);
         wait.until(driver -> idOfCompany.equals(companyField.getFirstSelectedOption().getText()));
@@ -80,16 +68,9 @@ public class AddComputerPage {
     }
 
     @Description("click on 'Create computer' button ")
-    public MainPage clickOnBtnCreateComputer() {
+    public MainPage createComputer() {
         btnCreateComputer.submit();
         return PageFactory.initElements(driver, MainPage.class);
-    }
-
-    @Description("presence Main form for adding a new computer ")
-    public AddComputerPage presenceMainAddForm() {
-        WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
-        wait.until(ExpectedConditions.visibilityOf(mainForm));
-        return this;
     }
 
 }

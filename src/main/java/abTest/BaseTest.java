@@ -9,7 +9,7 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void openUrl() {
+    public void setUp() {
         WebDriverProvider.getWebDriver().manage().window().maximize();
         WebDriverProvider.getWebDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }

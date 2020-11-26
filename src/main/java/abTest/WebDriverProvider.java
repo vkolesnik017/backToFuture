@@ -7,7 +7,8 @@ public class WebDriverProvider {
 
     private static WebDriver webDriver;
 
-    private WebDriverProvider() {}
+    private WebDriverProvider() {
+    }
 
     public static synchronized WebDriver getWebDriver() {
         if (webDriver == null) {

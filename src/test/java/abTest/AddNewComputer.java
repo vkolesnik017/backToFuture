@@ -1,24 +1,30 @@
 package abTest;
 
+import abTest.pages.AddComputerPage;
+import abTest.pages.MainPage;
 import io.qameta.allure.Description;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AddNewComputer extends BaseTest {
-    public String titleOfCOmputer = "Apolo12";
+import java.time.LocalDate;
 
+public class AddNewComputer extends BaseTest {
     @Test
     @Description(value = "test check add a new computer to Database")
-    public void testCheckAddNewComputer() throws InterruptedException {
-        MainPage mainPage = PageFactory.initElements(WebDriverProvider.getWebDriver(), abTest.MainPage.class);
-        AddComputerPage addComputerPage = mainPage.presenceOfDataBaseTable().clickOnAddNewComputer();
-        String currentDate = addComputerPage.getCurrentDate();
-        String oldDate = addComputerPage.getOldDate(10);
-        addComputerPage.presenceMainAddForm().setComputerName(titleOfCOmputer).setIntroducedDate(oldDate).setDiscontinuedDate(currentDate).selectCompany("Apple Inc.")
-                .clickOnBtnCreateComputer().presenceOfDataBaseTable();
-        String resultOfSearch = mainPage.getResultOfSearch(titleOfCOmputer);
-        Assert.assertEquals(resultOfSearch, titleOfCOmputer);
+    public void testCheckAddNewComputer() {
+        String computerTitle = "GEFER";
+        MainPage mainPage = PageFactory.initElements(WebDriverProvider.getWebDriver(), MainPage.class);
+        AddComputerPage addComputerPage = mainPage.open("http://computer-database.gatling.io/computers").addNewComputer();
+        LocalDate currentDate = LocalDate.now();
+        LocalDate oldDate = currentDate.minusYears(10);
+        String resultOfSearch = addComputerPage
+                .setComputerName(computerTitle)
+                .setIntroducedDate(oldDate)
+                .setDiscontinuedDate(currentDate)
+                .selectCompany("Apple Inc.")
+                .createComputer()
+                .searchForComputer(computerTitle);
+        Assert.assertEquals(resultOfSearch, computerTitle, String.format("Computer %s is absent", computerTitle));
     }
-
 }
