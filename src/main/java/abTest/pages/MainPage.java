@@ -1,7 +1,7 @@
 package abTest.pages;
 
 import abTest.WebDriverProvider;
-import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,7 +35,7 @@ public class MainPage {
         this.driver = driver;
     }
 
-    @Description("open page")
+    @Step("open page")
     public MainPage open(String url) {
         driver.get(url);
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
@@ -43,14 +43,14 @@ public class MainPage {
         return this;
     }
 
-    @Description("click on Add a New Computer button")
+    @Step("click on Add a New Computer button")
     public AddComputerPage addNewComputer() {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         wait.until(ExpectedConditions.visibilityOf(btnAddNewComputer)).click();
         return PageFactory.initElements(driver, AddComputerPage.class);
     }
 
-    @Description("get result of search")
+    @Step("get result of search")
     public String searchForComputer(String titleOfComputer) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         wait.until(ExpectedConditions.visibilityOf(searchField)).sendKeys(titleOfComputer);

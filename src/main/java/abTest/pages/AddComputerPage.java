@@ -1,7 +1,7 @@
 package abTest.pages;
 
 import abTest.WebDriverProvider;
-import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,7 +33,7 @@ public class AddComputerPage {
     WebElement btnCreateComputer;
 
 
-    @Description("set value for 'Computer name' field")
+    @Step("set value for 'Computer name' field")
     public AddComputerPage setComputerName(String computerName) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 10);
         wait.until(ExpectedConditions.visibilityOf(computerNameField)).sendKeys(computerName);
@@ -41,7 +41,7 @@ public class AddComputerPage {
         return this;
     }
 
-    @Description("set value for 'Introduced date' field")
+    @Step("set value for 'Introduced date' field")
     public AddComputerPage setIntroducedDate(LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
@@ -50,7 +50,7 @@ public class AddComputerPage {
         return this;
     }
 
-    @Description("set value for 'Introduced date' field")
+    @Step("set value for 'Introduced date' field")
     public AddComputerPage setDiscontinuedDate(LocalDate date) {
         String dateString = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
@@ -59,7 +59,7 @@ public class AddComputerPage {
         return this;
     }
 
-    @Description("select value for Company field ")
+    @Step("select value for Company field ")
     public AddComputerPage selectCompany(String idOfCompany) {
         WebDriverWait wait = new WebDriverWait(WebDriverProvider.getWebDriver(), 5);
         companyField.selectByVisibleText(idOfCompany);
@@ -67,7 +67,7 @@ public class AddComputerPage {
         return this;
     }
 
-    @Description("click on 'Create computer' button ")
+    @Step("click on 'Create computer' button ")
     public MainPage createComputer() {
         btnCreateComputer.submit();
         return PageFactory.initElements(driver, MainPage.class);
