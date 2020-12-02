@@ -31,8 +31,8 @@
                     <properties>
                     </properties>
                     <suiteXmlFiles>
-                        <!--    <suiteXmlFile>${basedir}${TEST_SUITE}.xml</suiteXmlFile> -->
-                        <suiteXmlFile>${basedir}/src/test/java/testSuites/suites.xml</suiteXmlFile>
+                            <suiteXmlFile>${basedir}${TEST_SUITE}.xml</suiteXmlFile>
+                       <!-- <suiteXmlFile>${basedir}/src/test/java/testSuites/suites.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                     <includes>
                     </includes>
@@ -72,4 +72,18 @@
         </dependency>
 
     </dependencies>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <configuration>
+                    <reportVersion>2.6.0</reportVersion>
+                </configuration>
+                <version>2.9</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
