@@ -12,6 +12,7 @@ public class WebDriverProvider {
 
     public static synchronized WebDriver getWebDriver() {
         if (webDriver == null) {
+            System.setProperty("webdriver.chrome.driver", "D:\\JavaProject\\ab_task\\driver\\chromedriver.exe");
             webDriver = new ChromeDriver();
         }
         return webDriver;

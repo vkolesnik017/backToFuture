@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-
     @BeforeMethod
     public void setUp() {
         WebDriverProvider.getWebDriver().manage().window().maximize();
